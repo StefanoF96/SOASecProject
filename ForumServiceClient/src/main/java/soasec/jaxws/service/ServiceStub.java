@@ -4772,6 +4772,11 @@
                                     
 
                                }
+                               
+                            @Override
+                           	public String toString() {
+                           		return "Message [messageID=" + localMessageID + ", userID=" + localUserID + ", message=" + localMessage + "]";
+                           	}
                             
 
                         /**
