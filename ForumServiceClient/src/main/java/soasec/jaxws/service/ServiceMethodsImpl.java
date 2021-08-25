@@ -7,14 +7,28 @@ import org.apache.axis2.databinding.ADBBean;
 
 public class ServiceMethodsImpl {
 	
-	public static boolean addMessage(int message_ID, int user_ID, String message_text) throws Exception {
+public static boolean addUser(int userID, String username, int priv_level) throws Exception {
+		
+		ServiceStub stub = new ServiceStub();//the default implementation should point to the right endpoint
+	    AddUser add_user = (AddUser)getForumObject(AddUser.class);
+		
+		// DONE : Fill in the addMessage18 here
+	    add_user.setUsername(username);
+	    add_user.setUserID(userID);
+	    add_user.setPriv_level(priv_level);
+	    
+	    return (stub.addUser(add_user).get_return());
+		
+	}
+
+	
+	public static boolean addMessage(String user_ID, String message_text) throws Exception {
 		
 		ServiceStub stub = new ServiceStub();//the default implementation should point to the right endpoint
 	    AddMessage add_message = (AddMessage)getForumObject(AddMessage.class);
 		
 		// DONE : Fill in the addMessage18 here
-	    add_message.setMessageID(message_ID);
-	    add_message.setUserID(user_ID);
+	    add_message.setUsername(user_ID);
 	    add_message.setMessaggio(message_text);
 	            
 	    return (stub.addMessage(add_message).get_return());
@@ -46,7 +60,7 @@ public class ServiceMethodsImpl {
 		
 	}
 	
-	public static Message[] getAllMessages() throws AxisFault, RemoteException, Exception {
+	public static MessUserPair[] getAllMessages() throws AxisFault, RemoteException, Exception {
 		
 		ServiceStub stub = new ServiceStub();//the default implementation should point to the right endpoint
 		GetAllMessages get_all_messages = (GetAllMessages)getForumObject(GetAllMessages.class);

@@ -11,7 +11,8 @@
 <LI><A HREF="Input.jsp?method=15" TARGET="inputs"> getAllMessages()</A></LI>
 <LI><A HREF="Input.jsp?method=18" TARGET="inputs"> editMessage(java.lang.Integer,java.lang.String)</A></LI>
 <LI><A HREF="Input.jsp?method=25" TARGET="inputs"> deleteMessage(java.lang.Integer)</A></LI>
-<LI><A HREF="Input.jsp?method=30" TARGET="inputs"> addMessage(java.lang.Integer,java.lang.Integer,java.lang.String)</A></LI>
+<LI><A HREF="Input.jsp?method=30" TARGET="inputs"> addMessage(java.lang.String,java.lang.String)</A></LI>
+<LI><A HREF="Input.jsp?method=35" TARGET="inputs"> addUser(java.lang.Integer,java.lang.String,java.lang.Integer)</A></LI>
 </UL>
 </BODY>
 </HTML>

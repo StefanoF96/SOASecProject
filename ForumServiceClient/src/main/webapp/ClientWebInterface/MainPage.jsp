@@ -18,9 +18,7 @@
 					    		<p>-- <b>user</b>: can only view and post messages.</p>
 					    		<p>-- <b>moderator</b>: can edit all users messages.</p>
 					    		<p>-- <b>admin</b>: can edit, delete messages and open close a topic.</p>
-		    				
 		    			</div>
-		    		
 		    	</div>
 		        <!-- Inner main -->
 		        <div class="inner-main">

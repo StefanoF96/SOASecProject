@@ -112,20 +112,43 @@ valid = false;
 <INPUT TYPE="HIDDEN" NAME="method" VALUE="<%=org.eclipse.jst.ws.util.JspUtils.markup(method)%>">
 <TABLE>
 <TR>
-<TD COLSPAN="1" ALIGN="LEFT">userID:</TD>
+<TD COLSPAN="1" ALIGN="LEFT">username:</TD>
 <TD ALIGN="left"><INPUT TYPE="TEXT" NAME="userID33" SIZE=20></TD>
-</TR>
-</TABLE>
-<TABLE>
-<TR>
-<TD COLSPAN="1" ALIGN="LEFT">messageID:</TD>
-<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="messageID35" SIZE=20></TD>
 </TR>
 </TABLE>
 <TABLE>
 <TR>
 <TD COLSPAN="1" ALIGN="LEFT">messaggio:</TD>
 <TD ALIGN="left"><INPUT TYPE="TEXT" NAME="messaggio37" SIZE=20></TD>
+</TR>
+</TABLE>
+<BR>
+<INPUT TYPE="SUBMIT" VALUE="Invoke">
+<INPUT TYPE="RESET" VALUE="Clear">
+</FORM>
+<%
+break;
+case 35:
+valid = false;
+%>
+<FORM METHOD="POST" ACTION="Result.jsp" TARGET="result">
+<INPUT TYPE="HIDDEN" NAME="method" VALUE="<%=org.eclipse.jst.ws.util.JspUtils.markup(method)%>">
+<TABLE>
+<TR>
+<TD COLSPAN="1" ALIGN="LEFT">user_id:</TD>
+<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="id35" SIZE=20></TD>
+</TR>
+</TABLE>
+<TABLE>
+<TR>
+<TD COLSPAN="1" ALIGN="LEFT">username:</TD>
+<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="username35" SIZE=20></TD>
+</TR>
+</TABLE>
+<TABLE>
+<TR>
+<TD COLSPAN="1" ALIGN="LEFT">privilege level:</TD>
+<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="privilege35" SIZE=20></TD>
 </TR>
 </TABLE>
 <BR>

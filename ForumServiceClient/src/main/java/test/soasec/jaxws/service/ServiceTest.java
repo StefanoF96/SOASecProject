@@ -78,11 +78,8 @@
 
            soasec.jaxws.service.ServiceStub.AddMessage addMessage18=
                                                         (soasec.jaxws.service.ServiceStub.AddMessage)getTestObject(soasec.jaxws.service.ServiceStub.AddMessage.class);
-                    // DONE : Fill in the addMessage18 here
-           			addMessage18.setMessageID(0);
-       				addMessage18.setUserID(0);
-       				addMessage18.setMessaggio("Hello world");
-           
+                    // TODO : Fill in the addMessage18 here
+                
                         assertNotNull(stub.addMessage(
                         addMessage18));
                   

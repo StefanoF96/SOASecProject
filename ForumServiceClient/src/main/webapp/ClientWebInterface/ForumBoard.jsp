@@ -3,17 +3,27 @@
 <%@ page import="soasec.jaxws.service.ServiceStub" %>
 <%@ page import="soasec.jaxws.service.ServiceStub.*" %>
 <%@ page import="soasec.jaxws.service.*" %>
+<%@ page import="soasec.jaxws.utils.ClientUtils" %>
+<%@ page import="java.util.Date" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<link rel="stylesheet" href="../css/style.css" />
+
+<%
+String new_message = request.getParameter("message");
+String user = request.getParameter("user");
+String password = request.getParameter("pswd");
+ServiceMethodsImpl.addMessage(user, new_message);
+%>
 
 <HTML>
 <HEAD>
 <TITLE>Result</TITLE>
 </HEAD>
 <BODY>
-	<div class="inner-main-body p-2 p-sm-3 collapse forum-content">
+	<div style = "padding:0" class="inner-main-body p-2 p-sm-3 collapse forum-content">
 		
 		<%
-			Message[] getAllMessages_temp = ServiceMethodsImpl.getAllMessages();
+			MessUserPair[] getAllMessages_temp = ServiceMethodsImpl.getAllMessages();
 			if(getAllMessages_temp == null){
 				%>
 				<%=getAllMessages_temp %>
@@ -27,87 +37,56 @@
 							<div class="card mb-2">
 							    <div class="card-body">
 							        <div class="media forum-item">
-							            <a href="javascript:void(0)" class="card-link">
-							                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle" width="50" alt="User" />
-							                <small class="d-block text-center text-muted">Pro</small>
-							            </a>
+							            <div  class="card-link">
+							                <img src="https://bootdey.com/img/Content/avatar/avatar<%
+							                int rand = ((int)(1+Math.random()*7)); 
+							                %><%=rand%>.png" class="rounded-circle" width="50" alt="User" />
+							                <a href="javascript:void(0)" id="username-displ" class="text-secondary"><%=getAllMessages_temp[i].getUser().getUsername() %></a>
+							                <small id="user-role-displ" class="d-block text-center text-muted">
+							                <%
+							                	int priv_lev = getAllMessages_temp[i].getUser().getPrivilege_level();
+							                	String user_role = "unknown";
+							                	switch(priv_lev){
+							                	case 0:
+							                		user_role = "user";
+							                		break;
+							                	case 1:
+							                		user_role = "moderator";
+							                		break;
+							                	case 2:
+							                		user_role = "forum admin";
+							                		break;
+							                	}
+							                %>
+							                <%=user_role%>
+							                </small>
+							                <small class="text-muted ml-2">posted 
+							                <%
+							                long curr_time = new Date().getTime();
+							                long post_time = getAllMessages_temp[i].getMessage().getTimeStamp();
+							                String time_diff = ClientUtils.getTimeDiffasString(ClientUtils.computeTsDiff(post_time, curr_time));
+							                if (time_diff.isEmpty() || time_diff.equals(""))
+							                	time_diff = "0 seconds";
+							                %>
+							                <%=time_diff%> 
+							                ago</small>
+							            </div>
 							            <div class="media-body ml-3">
-							                <a href="javascript:void(0)" class="text-secondary"><%=getAllMessages_temp[i].getUserID()%></a>
-							                <small class="text-muted ml-2">1 hour ago</small>
-							                <div class="mt-3 font-size-sm">
-							                	<%=getAllMessages_temp[i].getMessage()%> 
+							                
+							                <div class="mt-3 font-size-sm" id="user-message-displ">
+							                	<%=getAllMessages_temp[i].getMessage().getMessage() %> 
 							                </div>
 							            </div>
 							        </div>
 							    </div>
-							</div>             
+							</div> 
 			        <%
 			        	}
 			}
 		%>
 		
 		
-		<div class="card mb-2">
-		    <div class="card-body">
-		        <div class="media forum-item">
-		            <a href="javascript:void(0)" class="card-link">
-		                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle" width="50" alt="User" />
-		                <small class="d-block text-center text-muted">Newbie</small>
-		            </a>
-		            <div class="media-body ml-3">
-		                <a href="javascript:void(0)" class="text-secondary">Mokrani</a>
-		                <small class="text-muted ml-2">1 hour ago</small>
-		                <h5 class="mt-1">Realtime fetching data</h5>
-		                <div class="mt-3 font-size-sm">
-		                    <p>Hellooo :)</p>
-		                    <p>
-		                        I'm newbie with laravel and i want to fetch data from database in realtime for my dashboard anaytics and i found a solution with ajax but it dosen't work if any one have a simple solution it will be
-		                        helpful
-		                    </p>
-		                    <p>Thank</p>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-		<div class="card mb-2">
-		    <div class="card-body">
-		        <div class="media forum-item">
-		            <a href="javascript:void(0)" class="card-link">
-		                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle" width="50" alt="User" />
-		                <small class="d-block text-center text-muted">Pro</small>
-		            </a>
-		            <div class="media-body ml-3">
-		                <a href="javascript:void(0)" class="text-secondary">drewdan</a>
-		                <small class="text-muted ml-2">1 hour ago</small>
-		                <div class="mt-3 font-size-sm">
-		                    <p>What exactly doesn't work with your ajax calls?</p>
-		                    <p>Also, WebSockets are a great solution for realtime data on a dashboard. Laravel offers this out of the box using broadcasting</p>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		</div>
 		
-		<div class="card mb-2">
-		    <div class="card-body">
-		        <div class="media forum-item">
-		            <a href="javascript:void(0)" class="card-link">
-		                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle" width="50" alt="User" />
-		                <small class="d-block text-center text-muted">Pro</small>
-		            </a>
-		            <div class="media-body ml-3">
-		                <a href="javascript:void(0)" class="text-secondary">drewdan</a>
-		                <small class="text-muted ml-2">1 hour ago</small>
-		                <div class="mt-3 font-size-sm">
-		                    <p>What exactly doesn't work with your ajax calls?</p>
-		                    <p>Also, WebSockets are a great solution for realtime data on a dashboard. Laravel offers this out of the box using broadcasting</p>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-	</div>
 
 </BODY>
 </HTML>

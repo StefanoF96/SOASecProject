@@ -30,7 +30,7 @@ switch (methodID){
 
 case 15:
         gotMethod = true;
-        Message[] getAllMessages15mtemp = ServiceMethodsImpl.getAllMessages();
+        MessUserPair[] getAllMessages15mtemp = ServiceMethodsImpl.getAllMessages();
 		if(getAllMessages15mtemp == null){
 		%>
 		<%=getAllMessages15mtemp %>
@@ -92,21 +92,16 @@ case 25:
 case 30:
         gotMethod = true;
         String userID_4id=  request.getParameter("userID33");
-            java.lang.Integer userID_4idTemp = null;
+            java.lang.String userID_4idTemp = null;
         if(!userID_4id.equals("")){
-         userID_4idTemp  = java.lang.Integer.valueOf(userID_4id);
-        }
-        String messageID_5id=  request.getParameter("messageID35");
-            java.lang.Integer messageID_5idTemp = null;
-        if(!messageID_5id.equals("")){
-         messageID_5idTemp  = java.lang.Integer.valueOf(messageID_5id);
+         userID_4idTemp  = userID_4id;
         }
         String messaggio_6id=  request.getParameter("messaggio37");
             java.lang.String messaggio_6idTemp = null;
         if(!messaggio_6id.equals("")){
          messaggio_6idTemp  = messaggio_6id;
         }
-        Boolean addMessage30mtemp = ServiceMethodsImpl.addMessage(userID_4idTemp,messageID_5idTemp,messaggio_6idTemp);
+        Boolean addMessage30mtemp = ServiceMethodsImpl.addMessage(userID_4idTemp,messaggio_6idTemp);
 		if(addMessage30mtemp == null){
 		%>
 		<%=addMessage30mtemp %>
@@ -118,6 +113,36 @@ case 30:
 		        <%
 		}
 		break;
+case 35:
+    gotMethod = true;
+    String userID_5id=  request.getParameter("id35");
+     java.lang.Integer userID_5idTemp = null;
+    if(!userID_5id.equals("")){
+    	userID_5idTemp  = Integer.parseInt(userID_5id);
+    }
+    String username35=  request.getParameter("username35");
+        java.lang.String username35Temp = null;
+    if(!username35.equals("")){
+    	username35Temp  = username35;
+   	}
+    String privilege35=  request.getParameter("privilege35");
+    java.lang.Integer privilege35Temp = null;
+    if(!userID_5id.equals("")){
+    	privilege35Temp  = Integer.parseInt(privilege35);
+    }
+    
+    Boolean addUser35mtemp = ServiceMethodsImpl.addUser(userID_5idTemp,username35Temp,privilege35Temp);
+	if(addUser35mtemp == null){
+	%>
+	<%=addUser35mtemp %>
+	<%
+	}else{
+	        String tempResultreturnp31 = org.eclipse.jst.ws.util.JspUtils.markup(String.valueOf(addUser35mtemp));
+	        %>
+	        <%= tempResultreturnp31 %>
+	        <%
+	}
+	break;
 }
 } catch (Exception e) { 
 %>
