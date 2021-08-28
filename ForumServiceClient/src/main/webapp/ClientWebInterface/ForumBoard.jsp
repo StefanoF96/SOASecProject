@@ -8,11 +8,31 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <link rel="stylesheet" href="../css/style.css" />
 
+<%@ page import="org.apache.axis2.client.ServiceClient" %>
+<%@ page import="org.apache.axis2.context.ConfigurationContext" %>
+<%@ page import="org.apache.axis2.context.ConfigurationContextFactory" %>
+<%@ page import="org.apache.axis2.description.PolicyInclude" %>
+<%@ page import="org.apache.neethi.Policy" %>
+<%@ page import="org.apache.rampart.policy.model.CryptoConfig" %>
+<%@ page import="org.apache.rampart.policy.model.RampartConfig" %>
+
+
 <%
+/*
+import org.apache.axis2.client.ServiceClient;
+import org.apache.axis2.context.ConfigurationContext;
+import org.apache.axis2.context.ConfigurationContextFactory;
+import org.apache.axis2.description.PolicyInclude;
+import org.apache.neethi.Policy;
+import org.apache.rampart.policy.model.CryptoConfig;
+import org.apache.rampart.policy.model.RampartConfig;
+*/
+
 String new_message = request.getParameter("message");
 String user = request.getParameter("user");
 String password = request.getParameter("pswd");
-ServiceMethodsImpl.addMessage(user, new_message);
+if (new_message != null)
+	ServiceMethodsImpl.addMessage(user, new_message);
 %>
 
 <HTML>

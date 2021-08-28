@@ -69,7 +69,7 @@
     <parameter name="DrillDownToRootCauseForFaultReason">false</parameter>
 
     <parameter name="userName">admin</parameter>
-    <parameter name="password">axis2</parameter>
+    <parameter name="password">Axis22sixA</parameter>
 
     <!--To override repository/services you need to uncomment following parameter and value SHOULD be absolute file path.-->
     <!--ServicesDirectory only works on the following cases-->
@@ -253,6 +253,8 @@
     <!-- ================================================= -->
     <!-- Comment this to disable Addressing -->
     <module ref="addressing"/>
+	<module ref="rampart"/>
+    <module ref="rahas"/>
 
     <!--Configuring module , providing parameters for modules whether they refer or not-->
     <!--<moduleConfig name="addressing">-->

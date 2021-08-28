@@ -18,6 +18,24 @@
   -->
 
 <axisconfig name="AxisJava2.0">
+
+	<!-- Engage the security module -->
+	<module ref="rampart"/>
+
+	<!-- TIMESTAMP-->
+
+	<parameter name="OutflowSecurity">
+    	<action>
+        	<items>Timestamp</items>
+        </action>
+	</parameter>
+	<parameter name="InflowSecurity">
+    	<action>
+        	<items>Timestamp</items>
+        </action>
+    </parameter>
+
+
     <!-- ================================================= -->
     <!-- Parameters -->
     <!-- ================================================= -->

@@ -1,10 +1,37 @@
 <service name="Service" >
 	<Description>
-		Please Type your service description here
+		Forum Board Service by Stefano Fasani
 	</Description>
 	<messageReceivers>
 		<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only" class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" />
 		<messageReceiver  mep="http://www.w3.org/2004/08/wsdl/in-out"  class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 	</messageReceivers>
 	<parameter name="ServiceClass" locked="false">soasec.jaxws.service.Service</parameter>
-</service>
+	<!-- SECURITY -->
+	<parameter name="InflowSecurity">
+	        <action>
+	                <items>Timestamp</items>
+	                <!--user>Stefano</user>
+	                <passwordCallbackClass>soasec.jaxws.service.PWCallback</passwordCallbackClass>
+	                <signaturePropFile>security.properties</signaturePropFile-->
+	        </action>
+	</parameter>
+	<parameter name="OutflowSecurity">
+	        <action>
+					<items>Timestamp</items>
+	                <!--items>Signature</items>
+	                <user>Stefano</user>
+	                <passwordCallbackClass>soasec.jaxws.service.PWCallback</passwordCallbackClass>
+	                <signaturePropFile>security.properties</signaturePropFile-->
+	        </action>
+	</parameter>
+	<!--operation name="add">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+	</operation-->	
+	
+	<operation name="getAllMessages">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+	</operation>    	
+	<module ref="rampart" />
+	
+</service >

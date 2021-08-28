@@ -9,5 +9,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="D:/Downloads/sqljdbc_9.4.0.0_ita/sqljdbc_9.4/ita/mssql-jdbc-9.4.0.jre8.jar"/>
+	<classpathentry kind="lib" path="D:/Downloads/sqljdbc_9.4.0.0_ita/sqljdbc_9.4/ita/mssql-jdbc-9.4.0.jre16.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
