@@ -7,31 +7,38 @@
 		<messageReceiver  mep="http://www.w3.org/2004/08/wsdl/in-out"  class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 	</messageReceivers>
 	<parameter name="ServiceClass" locked="false">soasec.jaxws.service.Service</parameter>
+	
 	<!-- SECURITY -->
+
+	<!-- ENCRYTPION TIMESTAMP and AUTHENTICATION -->
 	<parameter name="InflowSecurity">
-	        <action>
-	                <items>Timestamp</items>
-	                <!--user>Stefano</user>
-	                <passwordCallbackClass>soasec.jaxws.service.PWCallback</passwordCallbackClass>
-	                <signaturePropFile>security.properties</signaturePropFile-->
-	        </action>
+        <action>
+            <items>UsernameToken Timestamp Encrypt Signature</items>
+            <passwordCallbackClass>soasec.jaxws.service.PWCallback</passwordCallbackClass>
+			<signaturePropFile>soasec/jaxws/security/security.properties</signaturePropFile>
+            <decryptionPropFile>soasec/jaxws/security/security.properties</decryptionPropFile>
+        </action>
 	</parameter>
+	
+	<!-- TIMESTAMP ENCRYPTION and SIGNATURE -->
 	<parameter name="OutflowSecurity">
 	        <action>
-					<items>Timestamp</items>
-	                <!--items>Signature</items>
-	                <user>Stefano</user>
-	                <passwordCallbackClass>soasec.jaxws.service.PWCallback</passwordCallbackClass>
-	                <signaturePropFile>security.properties</signaturePropFile-->
+					<items>Timestamp Encrypt Signature</items>
+					<timeToLive>10</timeToLive> 
+					<!--signature data-->
+					<passwordCallbackClass>soasec.jaxws.service.PWCallback</passwordCallbackClass>
+					<user>service</user>
+					<signaturePropFile>soasec/jaxws/security/security.properties</signaturePropFile>
+					<!--encryption data-->
+					<encryptionUser>client</encryptionUser>
+					<encryptionPropFile>soasec/jaxws/security/security.properties</encryptionPropFile>
+
+					
+	                <!--encryptionUser>service_owner</encryptionUser>
+	                <encryptionPropFile>soasec/jaxws/security/security.properties</encryptionPropFile-->
+					<!--encryptionKeyIdentifier>SKIKeyIdentifier</encryptionKeyIdentifier--> 
 	        </action>
 	</parameter>
-	<!--operation name="add">
-		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-	</operation-->	
 	
-	<operation name="getAllMessages">
-		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-	</operation>    	
-	<module ref="rampart" />
 	
 </service >

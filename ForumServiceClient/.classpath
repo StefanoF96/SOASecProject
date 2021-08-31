@@ -11,5 +11,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="C:/Users/Stefa/eclipse-works/ForumService/src/main/webapp/WEB-INF/lib/neethi-3.0.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

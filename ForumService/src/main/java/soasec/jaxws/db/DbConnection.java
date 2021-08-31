@@ -1,5 +1,4 @@
 package soasec.jaxws.db;
-
 import java.sql.*;
 
 public class DbConnection {

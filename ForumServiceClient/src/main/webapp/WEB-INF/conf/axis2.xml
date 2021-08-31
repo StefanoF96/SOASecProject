@@ -21,17 +21,29 @@
 
 	<!-- Engage the security module -->
 	<module ref="rampart"/>
-
-	<!-- TIMESTAMP-->
-
+		
+	<!-- ENCRYPTION  TIMESTAMP and SIGNATURE ___ USERNAMETOKEN IS DEFINED IN policy.xml  -->
 	<parameter name="OutflowSecurity">
-    	<action>
-        	<items>Timestamp</items>
+        <action>
+            <items>Timestamp Encrypt Signature</items>
+			<timeToLive>10</timeToLive> 
+			<!--signature data-->
+			<passwordCallbackClass>soasec.jaxws.service.PWCallback</passwordCallbackClass>
+			<user>client</user>
+			<signaturePropFile>../conf/security.properties</signaturePropFile>
+			<!--encryption data-->
+			<encryptionUser>service</encryptionUser>
+			<encryptionPropFile>../conf/security.properties</encryptionPropFile>
         </action>
 	</parameter>
+
+	<!-- TIMESTAMP ENCRYPTION and SIGNATURE -->
 	<parameter name="InflowSecurity">
     	<action>
-        	<items>Timestamp</items>
+        	<items>Timestamp Encrypt Signature</items>
+			<passwordCallbackClass>soasec.jaxws.service.PWCallback</passwordCallbackClass>
+			<signaturePropFile>../conf/security.properties</signaturePropFile>
+            <decryptionPropFile>../conf/security.properties</decryptionPropFile>
         </action>
     </parameter>
 
