@@ -28,74 +28,37 @@ public class ServiceMethodsImpl {
      * Load policy file from classpath.
 	 * @throws javax.xml.stream.XMLStreamException 
      */
-	private static Policy loadPolicy(String name) throws XMLStreamException {
-        ClassLoader loader = WebServiceClient.class.getClassLoader();
-        InputStream resource = loader.getResourceAsStream(name);
-        StAXOMBuilder builder = null;
-		try {
-			builder = new StAXOMBuilder(resource);
-		} catch (javax.xml.stream.XMLStreamException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        return PolicyEngine.getPolicy(builder.getDocumentElement());
-    }
-    
+
+	private String user;
+	private String password;
+	
+	public ServiceMethodsImpl() {
+		super();
+	}
+	
+	public ServiceMethodsImpl(String user, String password) {
+		super();
+		this.user = user.toLowerCase();
+		this.password = password;
+	}
+	
+	public void setUser(String user){
+		this.user = user.toLowerCase();
+	}
+	
+	public void setPassword(String password){
+		this.password = password;
+	}
 		
-	public static ServiceStub getStub() throws AxisFault {
-		// Prepare the client
-		/* OLD VERSION WITH axis2.xml file
-		ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem("C:\\Users\\Stefa\\eclipse-works\\ForumService\\src\\main\\webapp\\WEB-INF" , "C:\\Users\\Stefa\\eclipse-works\\ForumServiceClient\\src\\main\\webapp\\WEB-INF\\conf\\axis2.xml");
-		ServiceStub stub = new ServiceStub(ctx);//the default implementation should point to the right endpoint
-		ServiceClient sc = stub._getServiceClient();
-		sc.engageModule("rampart");
-		stub._getServiceClient().engageModule("rampart");
-		*/
-	
-	
-	/* very basic solution °raw° without rampart 
-		String username = "test";
-		String password = "lasciam perd";
-		
-		ServiceStub stub = new ServiceStub();//the default implementation should point to the right endpoint
-		ServiceClient client = stub._getServiceClient();
-		SOAP11Factory factory = new SOAP11Factory();
-		OMNamespace SecurityElementNamespace = factory.createOMNamespace("http://schemas.xmlsoap.org/ws/2002/04/secext", "wlm");
-	
-		OMElement usernameTokenEl = factory.createOMElement("UsernameToken", SecurityElementNamespace);
-		OMElement usernameEl = factory.createOMElement("Username", SecurityElementNamespace);
-		OMElement passwordEl = factory.createOMElement("PasswordDigest", SecurityElementNamespace);
-		usernameEl.setText(username);
-		passwordEl.setText(password);
-		usernameTokenEl.addChild(usernameEl);
-		usernameTokenEl.addChild(passwordEl);
-	
-		SOAPHeaderBlockImpl block = new SOAP11HeaderBlockImpl("Security", SecurityElementNamespace, factory);
-		block.addChild(usernameTokenEl);
-	
-		client.addHeader(block);
-	*/
+	public ServiceStub getStub() throws AxisFault {
 		
 		// Prepare the client
 		ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem("C:\\Users\\Stefa\\eclipse-works\\ForumServiceClient\\src\\main\\webapp\\WEB-INF" , "C:\\Users\\Stefa\\eclipse-works\\ForumServiceClient\\src\\main\\webapp\\WEB-INF\\conf\\axis2.xml");
-		
 		ServiceStub stub = new ServiceStub(ctx);
         
         // configure and engage Rampart
         ServiceClient client = stub._getServiceClient();
         Options options = client.getOptions();
-        
-        /*
-        try {
-			options.setProperty(RampartMessageData.KEY_RAMPART_POLICY, loadPolicy("policy.xml"));
-		} catch (XMLStreamException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        catch(Exception e) {
-        	e.printStackTrace();
-        }
-        */
         
         StAXOMBuilder builder = null;
 		
@@ -108,8 +71,8 @@ public class ServiceMethodsImpl {
 		
         final Policy policy = PolicyEngine.getPolicy(builder.getDocumentElement());
 	    options.setProperty(RampartMessageData.KEY_RAMPART_POLICY,policy);
-	    options.setUserName("jon");
-        options.setPassword("password1");
+	    options.setUserName(this.user);
+        options.setPassword(this.password);
 	    client.setOptions(options);
 	    
 	    client.engageModule("rampart");
@@ -117,13 +80,14 @@ public class ServiceMethodsImpl {
 		return stub;
 	}
 	
-	public static boolean addUser(int userID, String username, int priv_level) throws Exception {
+	public boolean addUser(int userID, String username, String password, int priv_level) throws Exception {
 	
-			ServiceStub stub = getStub();
+			ServiceStub stub = this.getStub();
 		    AddUser add_user = (AddUser)getForumObject(AddUser.class);
 			// DONE : Fill in the addMessage18 here
 		    add_user.setUsername(username);
 		    add_user.setUserID(userID);
+		    add_user.setPassword(password);
 		    add_user.setPriv_level(priv_level);
 		    
 		    return (stub.addUser(add_user).get_return());
@@ -131,22 +95,21 @@ public class ServiceMethodsImpl {
 	}
 
 	
-	public static boolean addMessage(String user_ID, String message_text) throws Exception {
+	public boolean addMessage(String message_text) throws RemoteException, Exception{
 		
-		ServiceStub stub = getStub();
+		ServiceStub stub = this.getStub();
 	    AddMessage add_message = (AddMessage)getForumObject(AddMessage.class);
 		
 		// DONE : Fill in the addMessage18 here
-	    add_message.setUsername(user_ID);
 	    add_message.setMessaggio(message_text);
 	            
 	    return (stub.addMessage(add_message).get_return());
 		
 	}
 	
-	public static boolean deleteMessage(int message_ID) throws Exception {
+	public  boolean deleteMessage(int message_ID) throws RemoteException, Exception {
 			
-		ServiceStub stub = getStub();
+		ServiceStub stub = this.getStub();
 		DeleteMessage del_message = (DeleteMessage)getForumObject(DeleteMessage.class);
 			
 			// DONE : Fill in the addMessage18 here
@@ -156,9 +119,9 @@ public class ServiceMethodsImpl {
 			
 		}
 	
-	public static boolean editMssage(int message_ID, String message_text) throws Exception {
+	public boolean editMssage(int message_ID, String message_text) throws RemoteException, Exception {
 		
-		ServiceStub stub = getStub();
+		ServiceStub stub = this.getStub();
 		EditMessage edit_message = (EditMessage)getForumObject(EditMessage.class);
 		
 		// DONE : Fill in the addMessage18 here
@@ -169,9 +132,9 @@ public class ServiceMethodsImpl {
 		
 	}
 	
-	public static MessUserPair[] getAllMessages() throws AxisFault, RemoteException, Exception {
+	public MessUserPair[] getAllMessages() throws AxisFault, RemoteException, Exception {
 		
-		ServiceStub stub = getStub();
+		ServiceStub stub = this.getStub();
 		GetAllMessages get_all_messages = (GetAllMessages)getForumObject(GetAllMessages.class);
       
 	    return (stub.getAllMessages(get_all_messages).get_return());

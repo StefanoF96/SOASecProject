@@ -13,6 +13,7 @@ public class User implements Serializable{
 	private int privilege_level;//0: normal user
 								//1: moderator
 								//2: admin
+	private int profile_img;
 	
 	public User(int id, String username, int priv_lev) {
 		super();
@@ -68,6 +69,14 @@ public class User implements Serializable{
 			return false;
 		User other = (User) obj;
 		return id == other.id && Objects.equals(username, other.username);
+	}
+
+	public int getProfile_img() {
+		return profile_img;
+	}
+
+	public void setProfile_img(int profile_img) {
+		this.profile_img = profile_img;
 	}
 	
 

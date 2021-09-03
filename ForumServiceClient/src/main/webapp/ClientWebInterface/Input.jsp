@@ -112,12 +112,6 @@ valid = false;
 <INPUT TYPE="HIDDEN" NAME="method" VALUE="<%=org.eclipse.jst.ws.util.JspUtils.markup(method)%>">
 <TABLE>
 <TR>
-<TD COLSPAN="1" ALIGN="LEFT">username:</TD>
-<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="userID33" SIZE=20></TD>
-</TR>
-</TABLE>
-<TABLE>
-<TR>
 <TD COLSPAN="1" ALIGN="LEFT">messaggio:</TD>
 <TD ALIGN="left"><INPUT TYPE="TEXT" NAME="messaggio37" SIZE=20></TD>
 </TR>
@@ -143,6 +137,11 @@ valid = false;
 <TR>
 <TD COLSPAN="1" ALIGN="LEFT">username:</TD>
 <TD ALIGN="left"><INPUT TYPE="TEXT" NAME="username35" SIZE=20></TD>
+</TR>
+</TABLE>
+<TR>
+<TD COLSPAN="1" ALIGN="LEFT">password:</TD>
+<TD ALIGN="left"><INPUT TYPE="TEXT" NAME="password35" SIZE=20></TD>
 </TR>
 </TABLE>
 <TABLE>

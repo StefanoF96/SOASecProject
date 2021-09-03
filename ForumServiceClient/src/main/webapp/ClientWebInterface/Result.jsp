@@ -3,7 +3,9 @@
 <%@ page import="soasec.jaxws.service.ServiceStub" %>
 <%@ page import="soasec.jaxws.service.ServiceStub.*" %>
 <%@ page import="soasec.jaxws.service.*" %>
-
+<%@ page import="java.security.MessageDigest" %>
+<%@ page import="java.math.BigInteger" %>
+<%@ page import="java.nio.charset.StandardCharsets" %>
 <HTML>
 <HEAD>
 <TITLE>Result</TITLE>
@@ -18,6 +20,13 @@ sampleServicePortTypeProxyid.setEndpoint(request.getParameter("endpoint"));
 %>--%>
 
 <%
+String user = "admin";
+MessageDigest digest = MessageDigest.getInstance("SHA-256");
+String password = String.format("%064x", new BigInteger(1, digest.digest("admin".getBytes(StandardCharsets.UTF_8))));
+
+ServiceMethodsImpl methods = new ServiceMethodsImpl(user, password);
+
+
 String method = request.getParameter("method");
 int methodID = 0;
 if (method == null) methodID = -1;
@@ -30,20 +39,31 @@ switch (methodID){
 
 case 15:
         gotMethod = true;
-        MessUserPair[] getAllMessages15mtemp = ServiceMethodsImpl.getAllMessages();
+        MessUserPair[] getAllMessages15mtemp = methods.getAllMessages();
 		if(getAllMessages15mtemp == null){
+			System.out.println("messages null?????");
 		%>
 		<%=getAllMessages15mtemp %>
 		<%
 		}else{
+			try{
 		        String tempreturnp16 = null;
 		        if(getAllMessages15mtemp != null){
-		        java.util.List listreturnp16= java.util.Arrays.asList(getAllMessages15mtemp);
-		        tempreturnp16 = listreturnp16.toString();
+			        java.util.List listreturnp16= java.util.Arrays.asList(getAllMessages15mtemp);
+			        tempreturnp16 = listreturnp16.toString();
+			        if(tempreturnp16 == null){
+			        	System.out.println(" èe null");
+			        }
+			        else{
+			        	System.out.println("non èe null");
+			        }
 		        }
 		        %>
 		        <%=tempreturnp16%>
 		        <%
+			} catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 		break;
 case 18:
@@ -58,7 +78,7 @@ case 18:
         if(!message_text_2id.equals("")){
          message_text_2idTemp  = message_text_2id;
         }
-        Boolean editMessage18mtemp = ServiceMethodsImpl.editMssage(messageID_1idTemp, message_text_2idTemp);
+        Boolean editMessage18mtemp = methods.editMssage(messageID_1idTemp, message_text_2idTemp);
 		if(editMessage18mtemp == null){
 		%>
 		<%=editMessage18mtemp %>
@@ -77,7 +97,7 @@ case 25:
         if(!id_3id.equals("")){
          id_3idTemp  = java.lang.Integer.valueOf(id_3id);
         }
-        Boolean deleteMessage25mtemp = ServiceMethodsImpl.deleteMessage(id_3idTemp);
+        Boolean deleteMessage25mtemp = methods.deleteMessage(id_3idTemp);
 		if(deleteMessage25mtemp == null){
 		%>
 		<%=deleteMessage25mtemp %>
@@ -91,17 +111,13 @@ case 25:
 		break;
 case 30:
         gotMethod = true;
-        String userID_4id=  request.getParameter("userID33");
-            java.lang.String userID_4idTemp = null;
-        if(!userID_4id.equals("")){
-         userID_4idTemp  = userID_4id;
-        }
+     
         String messaggio_6id=  request.getParameter("messaggio37");
             java.lang.String messaggio_6idTemp = null;
         if(!messaggio_6id.equals("")){
          messaggio_6idTemp  = messaggio_6id;
         }
-        Boolean addMessage30mtemp = ServiceMethodsImpl.addMessage(userID_4idTemp,messaggio_6idTemp);
+        Boolean addMessage30mtemp = methods.addMessage(messaggio_6idTemp);
 		if(addMessage30mtemp == null){
 		%>
 		<%=addMessage30mtemp %>
@@ -125,13 +141,18 @@ case 35:
     if(!username35.equals("")){
     	username35Temp  = username35;
    	}
+    String password35=  request.getParameter("password35");
+    java.lang.String password35Temp = null;
+	if(!password35.equals("")){
+		password35Temp  = password35;
+	}
     String privilege35=  request.getParameter("privilege35");
     java.lang.Integer privilege35Temp = null;
     if(!userID_5id.equals("")){
     	privilege35Temp  = Integer.parseInt(privilege35);
     }
     
-    Boolean addUser35mtemp = ServiceMethodsImpl.addUser(userID_5idTemp,username35Temp,privilege35Temp);
+    Boolean addUser35mtemp = methods.addUser(userID_5idTemp,username35Temp,password35Temp,privilege35Temp);
 	if(addUser35mtemp == null){
 	%>
 	<%=addUser35mtemp %>

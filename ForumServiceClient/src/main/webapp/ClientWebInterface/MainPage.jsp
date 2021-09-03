@@ -27,8 +27,7 @@
 		
 		            <!-- Forum Detail -->
 		            
-		            	<iframe  src="ForumBoard.jsp" name="forumboard" style="height: 100%; margin-top:5px; margin-right:5px;">		            		                
-			                
+		            	<iframe  src="ForumBoard.jsp" name="forumboard" style="height: 100%; margin-top:5px; margin-right:5px;">
 		                </iframe>    
 		    
 		            <!-- /Forum Detail -->
@@ -44,6 +43,8 @@
 			        		<div class="form-group"> 
 			        			<textarea style = "float: left;" rows = "5" cols = "60" name = "message" placeholder="Insert Your Message Here"></textarea>
 				        		<div class="form-group-2"> 
+				        			<input id="soap_op" type="hidden" name="op" value="add">
+				        			<input id=msg_id type="hidden" name="msg_id" value="0">
 				        			<input type="text" id="email" placeholder="Username" name="user">
 	  								<input type="password" id="pwd" placeholder="Password" name="pswd">
 	  								<button type = "submit" value = "submit" class="btn btn-primary">Post</button>

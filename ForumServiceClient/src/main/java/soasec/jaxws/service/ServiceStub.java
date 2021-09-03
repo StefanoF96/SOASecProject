@@ -3544,13 +3544,54 @@
                                * @param param Username
                                */
                                public void setUsername(java.lang.String param){
-                            localUsernameTracker = true;
-                                   
-                                            this.localUsername=param;
+                            	   	localUsernameTracker = true;
+                            	   	this.localUsername=param;
                                     
 
                                }
-                            
+                           
+                               
+                               /**
+                                * field for Password
+                                */
+
+                                
+                                    protected java.lang.String localPassword ;
+                                        
+                                   /*  This tracker boolean wil be used to detect whether the user called the set method
+                                  *   for this attribute. It will be used to determine whether to include this field
+                                   *   in the serialized XML
+                                   */
+                                   protected boolean localPasswordTracker = false ;
+
+                                   public boolean isPasswordSpecified(){
+                                       return localPasswordTracker;
+                                   }
+
+                                   
+
+                                   /**
+                                   * Auto generated getter method
+                                   * @return java.lang.String
+                                   */
+                                   public  java.lang.String getPassword(){
+                                       return localPassword;
+                                   }
+
+                                   
+                                
+                                    /**
+                                       * Auto generated setter method
+                                       * @param param UserID
+                                       */
+                                       public void setPassword(java.lang.String param){
+                                               // setting primitive attribute tracker to true
+                                               localPasswordTracker = true;
+                                               this.localPassword=param;
+                                           
+                                       }    
+                               
+                               
 
                         /**
                         * field for Priv_level
@@ -3686,7 +3727,28 @@
                                           }
                                     
                                    xmlWriter.writeEndElement();
-                             } if (localPriv_levelTracker){
+                             } 
+                             if (localPasswordTracker){
+                                 namespace = "http://service.jaxws.soasec";
+                                 writeStartElement(null, namespace, "password", xmlWriter);
+                          
+
+                                       if (localPassword==null){
+                                           // write the nil attribute
+                                           
+                                                  writeAttribute("xsi","http://www.w3.org/2001/XMLSchema-instance","nil","1",xmlWriter);
+                                               
+                                       }else{
+
+                                     
+                                                xmlWriter.writeCharacters(localPassword);
+                                         
+                                       }
+                                 
+                                xmlWriter.writeEndElement();
+                          }
+                             
+                             if (localPriv_levelTracker){
                                     namespace = "http://service.jaxws.soasec";
                                     writeStartElement(null, namespace, "priv_level", xmlWriter);
                              
@@ -5325,49 +5387,6 @@
                 "addMessage",
                 "ns2");
 
-            
-
-                        /**
-                        * field for Username
-                        */
-
-                        
-                                    protected java.lang.String localUsername ;
-                                
-                           /*  This tracker boolean wil be used to detect whether the user called the set method
-                          *   for this attribute. It will be used to determine whether to include this field
-                           *   in the serialized XML
-                           */
-                           protected boolean localUsernameTracker = false ;
-
-                           public boolean isUsernameSpecified(){
-                               return localUsernameTracker;
-                           }
-
-                           
-
-                           /**
-                           * Auto generated getter method
-                           * @return java.lang.String
-                           */
-                           public  java.lang.String getUsername(){
-                               return localUsername;
-                           }
-
-                           
-                        
-                            /**
-                               * Auto generated setter method
-                               * @param param Username
-                               */
-                               public void setUsername(java.lang.String param){
-                            localUsernameTracker = true;
-                                   
-                                            this.localUsername=param;
-                                    
-
-                               }
-                            
 
                         /**
                         * field for Messaggio
@@ -5469,25 +5488,7 @@
 
                
                    }
-                if (localUsernameTracker){
-                                    namespace = "http://service.jaxws.soasec";
-                                    writeStartElement(null, namespace, "username", xmlWriter);
-                             
-
-                                          if (localUsername==null){
-                                              // write the nil attribute
-                                              
-                                                     writeAttribute("xsi","http://www.w3.org/2001/XMLSchema-instance","nil","1",xmlWriter);
-                                                  
-                                          }else{
-
-                                        
-                                                   xmlWriter.writeCharacters(localUsername);
-                                            
-                                          }
-                                    
-                                   xmlWriter.writeEndElement();
-                             } if (localMessaggioTracker){
+                if (localMessaggioTracker){
                                     namespace = "http://service.jaxws.soasec";
                                     writeStartElement(null, namespace, "messaggio", xmlWriter);
                              
@@ -5690,19 +5691,13 @@
                  java.util.ArrayList elementList = new java.util.ArrayList();
                  java.util.ArrayList attribList = new java.util.ArrayList();
 
-                 if (localUsernameTracker){
-                                      elementList.add(new javax.xml.namespace.QName("http://service.jaxws.soasec",
-                                                                      "username"));
-                                 
-                                         elementList.add(localUsername==null?null:
-                                         org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localUsername));
-                                    } if (localMessaggioTracker){
-                                      elementList.add(new javax.xml.namespace.QName("http://service.jaxws.soasec",
-                                                                      "messaggio"));
-                                 
-                                         elementList.add(localMessaggio==null?null:
-                                         org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localMessaggio));
-                                    }
+                 if (localMessaggioTracker){
+                      elementList.add(new javax.xml.namespace.QName("http://service.jaxws.soasec",
+                                                      "messaggio"));
+                 
+                         elementList.add(localMessaggio==null?null:
+                         org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localMessaggio));
+                    }
 
                 return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(), attribList.toArray());
             
@@ -5777,35 +5772,7 @@
                 
                     
                     reader.next();
-                
-                                    
-                                    while (!reader.isStartElement() && !reader.isEndElement()) reader.next();
-                                
-                                    if (reader.isStartElement() && new javax.xml.namespace.QName("http://service.jaxws.soasec","username").equals(reader.getName())){
-                                
-                                       nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");
-                                       if (!"true".equals(nillableValue) && !"1".equals(nillableValue)){
-                                    
-
-                                    java.lang.String content = reader.getElementText();
-                                    
-                                              object.setUsername(
-                                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToString(content));
-                                            
-                                       } else {
-                                           
-                                           
-                                           reader.getElementText(); // throw away text nodes if any.
-                                       }
-                                      
-                                        reader.next();
-                                    
-                              }  // End of if for expected property start element
-                                
-                                    else {
-                                        
-                                    }
-                                
+  
                                     
                                     while (!reader.isStartElement() && !reader.isEndElement()) reader.next();
                                 
@@ -6502,9 +6469,52 @@
                                        param != java.lang.Integer.MIN_VALUE;
                                    
                                             this.localPrivilege_level=param;
-                                    
-
                                }
+                               
+                               
+                               
+                               /**
+                                * field for Profile_img
+                                */
+                               
+                                   protected int localProfile_img ;
+                                        
+                                   /*  This tracker boolean wil be used to detect whether the user called the set method
+                                  *   for this attribute. It will be used to determine whether to include this field
+                                   *   in the serialized XML
+                                   */
+                                   protected boolean localProfile_imgTracker = false ;
+
+                                   public boolean isProfile_imgSpecified(){
+                                       return localProfile_imgTracker;
+                                   }
+
+                                   
+
+                                   /**
+                                   * Auto generated getter method
+                                   * @return int
+                                   */
+                                   public  int getProfile_img(){
+                                       return localProfile_img;
+                                   }
+
+                                   
+                                
+                                    /**
+                                       * Auto generated setter method
+                                       * @param param Profile_img
+                                       */
+                                       public void setProfile_img(int param){
+                                    
+                                               // setting primitive attribute tracker to true
+                                               localProfile_imgTracker =
+                                               param != java.lang.Integer.MIN_VALUE;
+                                           
+                                                    this.localProfile_img=param;
+                                            
+
+                                       }
                             
 
                         /**
@@ -6633,7 +6643,25 @@
                                                }
                                     
                                    xmlWriter.writeEndElement();
-                             } if (localUsernameTracker){
+                             } 
+						         if (localProfile_imgTracker){
+						             namespace = "http://beans.jaxws.soasec/xsd";
+						             writeStartElement(null, namespace, "profile_img", xmlWriter);
+						      
+						                        if (localProfile_img==java.lang.Integer.MIN_VALUE) {
+						                    
+						                                  throw new org.apache.axis2.databinding.ADBException("profile_img cannot be null!!");
+						                               
+						                        } else {
+						                             xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localProfile_img));
+						                        }
+						             
+						            xmlWriter.writeEndElement();
+						      }
+                             
+                             
+                             
+                             if (localUsernameTracker){
                                     namespace = "http://beans.jaxws.soasec/xsd";
                                     writeStartElement(null, namespace, "username", xmlWriter);
                              
@@ -6848,6 +6876,12 @@
                                  
                                 elementList.add(
                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localPrivilege_level));
+                            } if (localProfile_imgTracker){
+                            	elementList.add(new javax.xml.namespace.QName("http://beans.jaxws.soasec/xsd",
+                            											"profile_img"));
+                            	
+                            	elementList.add(
+                            			org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localProfile_img));
                             } if (localUsernameTracker){
                                       elementList.add(new javax.xml.namespace.QName("http://beans.jaxws.soasec/xsd",
                                                                       "username"));
@@ -6984,7 +7018,35 @@
                                 
                                     
                                     while (!reader.isStartElement() && !reader.isEndElement()) reader.next();
-                                
+                                    
+                                    //profile_img
+                                    if (reader.isStartElement() && new javax.xml.namespace.QName("http://beans.jaxws.soasec/xsd","profile_img").equals(reader.getName())){
+                                        
+                                        nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");
+                                        if ("true".equals(nillableValue) || "1".equals(nillableValue)){
+                                            throw new org.apache.axis2.databinding.ADBException("The element: "+"profile_img" +"  cannot be null");
+                                        }
+                                        
+
+                                        java.lang.String content = reader.getElementText();
+                                        
+                                                  object.setProfile_img(
+                                                        org.apache.axis2.databinding.utils.ConverterUtil.convertToInt(content));
+                                                  
+                                            reader.next();
+                                        
+                                  }  // End of if for expected property start element
+                                    
+                                        else {
+                                            
+                                                   object.setProfile_img(java.lang.Integer.MIN_VALUE);
+                                               
+                                        }
+                                    
+                                        while (!reader.isStartElement() && !reader.isEndElement()) reader.next();
+                                    
+                                        
+                                    //username
                                     if (reader.isStartElement() && new javax.xml.namespace.QName("http://beans.jaxws.soasec/xsd","username").equals(reader.getName())){
                                 
                                        nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");

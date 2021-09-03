@@ -108,6 +108,22 @@
             public void receiveErroreditMessage(java.lang.Exception e) {
             }
                 
+           /**
+            * auto generated Axis2 call back method for addUser method
+            * override this method for handling normal response from addUser operation
+            */
+           public void receiveResultaddUser(
+                    soasec.jaxws.service.ServiceStub.AddUserResponse result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from addUser operation
+           */
+            public void receiveErroraddUser(java.lang.Exception e) {
+            }
+                
 
 
     }

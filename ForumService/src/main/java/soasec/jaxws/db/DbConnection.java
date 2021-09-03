@@ -15,33 +15,36 @@ public class DbConnection {
    
    public boolean connect() {
 	   try {
+	       Class.forName("com.mysql.jdbc.Driver");
+	       System.out.println("Driver loaded!");
+	   } catch (ClassNotFoundException e) {
+	       throw new IllegalStateException("Cannot find the driver in the classpath!", e);
+	   }
+	   try {
 		   conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	   } catch (SQLException e) {
-	         e.printStackTrace();
-	         return false;
+		   System.err.println("Cannot connect the database!");
+	       e.printStackTrace();
+	       return false;
 	      } 
 	   return true;
    }
    
-   public ResultSet executeQuery(String query) {
-	   try{
+   public ResultSet executeQuery(String query) throws SQLException {
 		   Statement stmt = conn.createStatement();
 		   ResultSet rs = stmt.executeQuery(query);
 		   return rs;
-	   }
-          
-	   catch (SQLException e) {
-		   e.printStackTrace();
-	       return null;
-	    }
+   }
+   
+   
+   public void executeUpdate(String query) throws SQLException {
+		   Statement stmt = conn.createStatement();
+		   stmt.executeUpdate(query);
    }
 
-   public static void main(String[] args) {
+   public static void main(String[] args) throws SQLException {
 	   //TESTING CONNECTIVITY
-	   /*
-	    * 
-	    * 
-	    * 
+	  /*
 	   System.out.println("Loading driver...");
 
 	   try {
@@ -56,18 +59,22 @@ public class DbConnection {
 		} catch (SQLException e) {
 		    throw new IllegalStateException("Cannot connect the database!", e);
 		}
-	    * 
-	    * 
-	    * 
-	    */
+	  */
 
 	   //test db
 	   String test_query = "SELECT id, first, last, age FROM TestEmployees";
 	   // Open a connection
 	   DbConnection conn = new DbConnection();
 	   ResultSet result = conn.executeQuery(test_query);
-	   
-	   // Extract data from result set
+	   try {
+		if (!result.isBeforeFirst() ) {    
+			    System.out.println("No data"); 
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+	
 	   try {
 		   while (result.next()) {
 			   // Retrieve by column name
