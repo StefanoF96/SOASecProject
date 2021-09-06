@@ -13,9 +13,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.function.BiConsumer;
+
 import java.util.TimeZone;
 
+@SuppressWarnings("deprecation")
 public class ClientUtils {
 
 	public static void main(String[] args){
@@ -125,5 +126,8 @@ public class ClientUtils {
 		Date d2 = new Date(ts2);
 		return computeDatesDiff(d1, d2);
 	}
+	
+	
+
 	
 }

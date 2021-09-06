@@ -42,9 +42,6 @@ if(request.getParameter("msg_id") != null){
 	message_ID = Integer.parseInt(request.getParameter("msg_id"));
 }
 
-//debug
-System.out.println("new msg = " + new_message + " - user = " + user + " - password = " + password + " - op = " + operation);
-
 
 //I have to hash the password because service will compare it with an hased password in DB
 //(Didn't found any better way to do this with axis2/rampart)
@@ -57,9 +54,6 @@ if (user == null){
 	user = "client";
 	password = "client";
 }
-
-//debug
-System.out.println("new msg = " + new_message + " - user = " + user + " - password = " + password );
 
 ServiceMethodsImpl methods = new ServiceMethodsImpl(user, password);
 
@@ -220,13 +214,13 @@ if (operation != null){
 					if (e.getLocalizedMessage().contains("security processing failed")){
 						System.out.println("security process failed");
 						%>
-						Something gone wrong during the Security verification of your user token, maybe you inserted wrong username or password
+						Something gone wrong during the Security verification of your UserToken, maybe you inserted wrong username or password
 						<%
 					}
 					if (e.getLocalizedMessage().contains("No user")){
 						System.out.println("no user inserted");
 						%>
-						Something gone wrong during the Security verification of your user token, maybe you inserted wrong username or password
+						Something gone wrong during the Security verification of your UserToken, maybe you inserted wrong username or password
 						<%
 					}
 				}

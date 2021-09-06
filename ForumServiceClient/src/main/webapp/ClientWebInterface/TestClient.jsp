@@ -15,6 +15,7 @@ resultJSP.append(resultObj.toString()).append("=").append(request.getParameter(r
 }
 %>
 <FRAME SRC="<%=org.eclipse.jst.ws.util.JspUtils.markup(resultJSP.toString())%>" NAME="result"  MARGINWIDTH="1" MARGINHEIGHT="1" SCROLLING="yes" FRAMEBORDER="1">
+<FRAME SRC="<%=org.eclipse.jst.ws.util.JspUtils.markup(resultJSP.toString())%>" NAME="result_xml"  MARGINWIDTH="1" MARGINHEIGHT="1" SCROLLING="yes" FRAMEBORDER="1">
 </FRAMESET>
 <NOFRAMES>
 <BODY>

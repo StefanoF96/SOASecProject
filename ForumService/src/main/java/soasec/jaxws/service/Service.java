@@ -40,11 +40,6 @@ public class Service {
 	public boolean addMessage(String messaggio) throws SQLException {
 		//ho dovuto modificare, perchè non riesco ad inviare la classe Message serializata via SOAP
 		
-		//String username_contex = MessageContext.getCurrentMessageContext().getEnvelope().getHeader().getFirstChildWithName(new QName("http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd","Username","wsse")).getText();
-        //System.out.println("usernameeeeeeeee from Service = " + username_contex);
-		
-		System.out.println("user = = =" + username);
-		
 		// create new message_id
 		Set<Integer> message_id_set = messages.keySet();
 		int messageID = 1;

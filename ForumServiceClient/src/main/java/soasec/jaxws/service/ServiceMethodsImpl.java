@@ -2,10 +2,12 @@ package soasec.jaxws.service;
 
 import soasec.jaxws.service.ServiceStub.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 
 import javax.xml.ws.WebServiceClient;
 
@@ -15,7 +17,11 @@ import org.apache.axis2.client.Options;
 import org.apache.axis2.client.ServiceClient;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
+import org.apache.axis2.context.MessageContext;
+import org.apache.axis2.context.ServiceContext;
 import org.apache.axis2.databinding.ADBBean;
+import org.apache.axis2.description.MessageContextListener;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.neethi.Policy;
 import org.apache.neethi.PolicyEngine;
 import org.apache.rampart.RampartMessageData;
@@ -31,6 +37,9 @@ public class ServiceMethodsImpl {
 
 	private String user;
 	private String password;
+	private String latestSoapResponse;
+	private String request;
+	private String response;
 	
 	public ServiceMethodsImpl() {
 		super();
@@ -73,9 +82,28 @@ public class ServiceMethodsImpl {
 	    options.setProperty(RampartMessageData.KEY_RAMPART_POLICY,policy);
 	    options.setUserName(this.user);
         options.setPassword(this.password);
-	    client.setOptions(options);
-	    
+	    client.setOptions(options);	    
 	    client.engageModule("rampart");
+	    
+	    //for getting soap envelops
+	    stub._getServiceClient().getAxisService().addMessageContextListener(
+			new MessageContextListener() {
+			    public void attachServiceContextEvent(ServiceContext sc,
+			        MessageContext mc) {}
+			    public void attachEnvelopeEvent(MessageContext mc) {
+			        try {		              	
+						mc.getEnvelope().cloneOMElement().serialize(System.out);
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						mc.getEnvelope().cloneOMElement().serialize(baos); 
+						latestSoapResponse=baos.toString();
+						//System.out.println(latestSoapResponse);
+						
+					} catch (javax.xml.stream.XMLStreamException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			    }
+			});
 
 		return stub;
 	}
@@ -90,8 +118,10 @@ public class ServiceMethodsImpl {
 		    add_user.setPassword(password);
 		    add_user.setPriv_level(priv_level);
 		    
-		    return (stub.addUser(add_user).get_return());
-			
+		    boolean res = stub.addUser(add_user).get_return();
+			this.setEnvelopeReqResp(stub);
+
+		    return (res);
 	}
 
 	
@@ -102,8 +132,11 @@ public class ServiceMethodsImpl {
 		
 		// DONE : Fill in the addMessage18 here
 	    add_message.setMessaggio(message_text);
-	            
-	    return (stub.addMessage(add_message).get_return());
+	    
+	    boolean res = stub.addMessage(add_message).get_return();
+		this.setEnvelopeReqResp(stub);
+        
+	    return (res);
 		
 	}
 	
@@ -115,7 +148,10 @@ public class ServiceMethodsImpl {
 			// DONE : Fill in the addMessage18 here
 		    del_message.setId(message_ID);
 		    
-		    return (stub.deleteMessage(del_message).get_return());
+		    boolean res = stub.deleteMessage(del_message).get_return();
+			this.setEnvelopeReqResp(stub);
+
+		    return (res);
 			
 		}
 	
@@ -127,8 +163,11 @@ public class ServiceMethodsImpl {
 		// DONE : Fill in the addMessage18 here
 	    edit_message.setMessageID(message_ID);
 	    edit_message.setMessage_text(message_text);
-
-	    return (stub.editMessage(edit_message).get_return());
+	    
+	    boolean res = stub.editMessage(edit_message).get_return();
+		this.setEnvelopeReqResp(stub);
+	    
+	    return (res);
 		
 	}
 	
@@ -136,14 +175,38 @@ public class ServiceMethodsImpl {
 		
 		ServiceStub stub = this.getStub();
 		GetAllMessages get_all_messages = (GetAllMessages)getForumObject(GetAllMessages.class);
-      
-	    return (stub.getAllMessages(get_all_messages).get_return());
-
+		
+		MessUserPair [] res = stub.getAllMessages(get_all_messages).get_return();
+		this.setEnvelopeReqResp(stub);
+		
+	    return (res);
 	}
+	
 
+	public void setEnvelopeReqResp(ServiceStub stub) {
+		try {
+			this.request = stub._getServiceClient().getLastOperationContext().getMessageContext("Out").getEnvelope().toString();
+			this.response = latestSoapResponse;
+			//this.response = stub._getServiceClient().getLastOperationContext().getMessageContext("In").getEnvelope().getText();
+	              
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.err.println("error in ServiceMethodsImpl, setting the current values of envelops");
+			e.printStackTrace();
+		}
+	}
+	
 	//Create an ADBBean and provide it as the test object
     public static ADBBean getForumObject(java.lang.Class type) throws java.lang.Exception{
        return (ADBBean) type.newInstance();
     }
+
+	public String getResponseEnvelope() {
+		return StringEscapeUtils.escapeHtml(response);
+	}
+
+	public String getRequestEnvelope() {
+		return StringEscapeUtils.escapeHtml(request);
+	}
 	
 }

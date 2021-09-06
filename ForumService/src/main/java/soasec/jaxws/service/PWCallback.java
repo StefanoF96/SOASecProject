@@ -23,8 +23,6 @@ public class PWCallback implements CallbackHandler {
                             WSPasswordCallback pc=(WSPasswordCallback)callbacks[i];
                             System.out.println(pc.getIdentifier());
                             
-                            //String username = MessageContext.getCurrentMessageContext().getEnvelope().getHeader().getFirstChildWithName(new QName("http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd","Username","wsse")).getText();
-                            //System.out.println("usernameeeeeeeee from PWCallback = " + username);
                             
                             if (pc.getUsage() == WSPasswordCallback.USERNAME_TOKEN) {
                             	System.out.println("user token");
@@ -35,8 +33,8 @@ public class PWCallback implements CallbackHandler {
 		                			if (!result.isBeforeFirst()) throw new Exception();
 		                			while (result.next()) {
 			                			if (pc.getIdentifier().equals(result.getString("username"))) {
-			                				System.out.println("user = " + result.getString("username"));
-			                				System.out.println("password = " + result.getString("password"));
+			                				//System.out.println("user = " + result.getString("username"));
+			                				//System.out.println("password = " + result.getString("password"));
 			                				pc.setPassword(result.getString("password"));
 			                				break;
 			                			}	

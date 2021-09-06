@@ -178,5 +178,11 @@ result: N/A
 <%
 }
 %>
+</br></br>
+<h2>Request:</h2>
+<%= methods.getRequestEnvelope()%>
+</br></br>
+<h2>Response:</h2>
+<%= methods.getResponseEnvelope()%>
 </BODY>
 </HTML>
